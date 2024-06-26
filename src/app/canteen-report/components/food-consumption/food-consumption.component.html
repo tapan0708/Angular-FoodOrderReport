@@ -1,0 +1,53 @@
+<app-header></app-header>
+<div class="container py-5">
+    <div class="mb-4">
+        <h1><b>{{userFoodOrderDetails?.user?.f_name}} {{userFoodOrderDetails?.user?.l_name}}</b></h1>
+        <h3>Total fines for the months: <b *ngIf="fineTotalCount > 0">₹{{fineTotalCount}}</b>
+        </h3>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Male Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Fine</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let user of userFoodOrderDetails.reports; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{user.date | date:'mediumDate' }}</td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <button type="button" class="btn btn-light btn-text m-1">breakfast</button>
+                            <button type="button" class="btn btn-light btn-text m-1">lunch</button>
+                            <button type="button" class="btn btn-light btn-text m-1">dinner</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column" *ngIf="user.opt_ins.length != 0">
+                            <button type="button" class="btn btn-light btn-text m-1">{{user.opt_ins.breakfast}}</button>
+                            <button type="button" class="btn btn-light btn-text m-1">{{user.opt_ins.lunch}}</button>
+                            <button type="button" class="btn btn-light btn-text m-1">{{user.opt_ins.dinner}}</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column" *ngIf="user.opt_ins.length != 0">
+                            <div class="btn-text m-2"
+                                [innerHTML]="user.opt_ins.breakfast.toLowerCase() == 'pending' ? fineAmount : 0"></div>
+                            <div class="btn-text m-2"
+                                [innerHTML]="user.opt_ins.lunch.toLowerCase() == 'pending' ? fineAmount : 0">
+                            </div>
+                            <div class="btn-text m-2"
+                                [innerHTML]="user.opt_ins.dinner.toLowerCase() == 'pending' ? fineAmount : 0">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
